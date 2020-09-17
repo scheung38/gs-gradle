@@ -1,3 +1,8 @@
+plugins {
+    id 'java'
+    id "io.freefair.lombok" version "5.2.1"
+ }
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'application'
@@ -7,6 +12,7 @@ mainClassName = 'hello.HelloWorld'
 // tag::repositories[]
 repositories { 
     mavenCentral() 
+
 }
 // end::repositories[]
 
@@ -24,8 +30,23 @@ targetCompatibility = 1.8
 dependencies {
     compile "joda-time:joda-time:2.2"
     testCompile "junit:junit:4.12"
+ 
 }
 // end::dependencies[]
 
 // tag::wrapper[]
 // end::wrapper[]
+
+
+
+tasks.withType(JavaExec) {
+    if (System.getProperty('DEBUG', 'false') == 'true') {
+        jvmArgs '-Xdebug', '-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=9099'
+    }
+}
+
+// plugins {
+//     id("io.freefair.lombok") version "5.2.1"
+// }
+
+ 
